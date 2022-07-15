@@ -31,18 +31,8 @@ const ContactForm = () => {
 
     const changeText = e => {
         const { name, value } = e.target;
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
 
-            case 'number':
-                setNumber(value);
-                break;
-
-            default:
-                break;
-        }
+        name === 'name' ? setName(value) : setNumber(value);
     };
 
     return (
@@ -78,7 +68,6 @@ const ContactForm = () => {
             </button>
         </form>
     );
-    // }
 };
 
 export default ContactForm;

@@ -1,25 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
 
-export const myContactsSlice = createSlice({
-    name: 'contacts',
-    initialState: {
-        items: [],
-        filter: '',
-    },
+export const itemSlice = createSlice({
+    name: 'items',
+    initialState: [],
     reducers: {
-        setFilter(state, action) {
-            state.filter = action.payload;
-        },
         addContacts(state, action) {
-            state.items.push(action.payload);
+            state.push(action.payload);
         },
         removeContacts(state, action) {
-            state.items = state.items.filter(
+            const items = state.filter(
                 contact => contact.id !== action.payload
             );
+            return (state = items);
         },
     },
 });
 
-export const { setFilter, addContacts, removeContacts } =
-    myContactsSlice.actions;
+export const filterSlice = createSlice({
+    name: 'filter',
+    initialState: '',
+    reducers: {
+        setFilter(state, action) {
+            return (state = action.payload);
+        },
+    },
+});
+
+const items = itemSlice.reducer;
+const filter = filterSlice.reducer;
+export const myCombineReduser = combineReducers({
+    items,
+    filter,
+});
+
+export const { addContacts, removeContacts } = itemSlice.actions;
+export const { setFilter } = filterSlice.actions;
